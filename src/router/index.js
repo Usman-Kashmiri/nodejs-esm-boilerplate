@@ -1,6 +1,12 @@
-const auth = require("./auth");
-const router = require("express").Router();
+import { routeNotFoundHandler } from "../middleware/app.js";
+import auth from "./auth.js";
+import express from "express";
+
+const router = express.Router();
 
 router.use("/auth", auth);
 
-module.exports = router;
+// ? app
+router.use(routeNotFoundHandler);
+
+export default router;

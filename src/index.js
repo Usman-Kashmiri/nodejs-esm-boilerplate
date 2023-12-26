@@ -1,13 +1,14 @@
-const app = require("./app");
-const dotenv = require("dotenv");
-const connectDB = require("./config/db");
-const http = require("http");
-const socket = require("socket.io");
+import http from "http";
+import { Server as socket } from "socket.io";
+import dotenv from "dotenv";
+import connectDB from "./config/db.js";
+import app from "./app.js";
+import { addUser, removeUser } from "./functions/sockets/index.js";
 
 dotenv.config({ path: "./src/config/config.env" }); //load env vars
 
 //global vars
-global.io; 
+global.io;
 global.onlineUsers = [];
 
 //server setup

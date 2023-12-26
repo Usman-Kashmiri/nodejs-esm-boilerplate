@@ -1,18 +1,23 @@
-const express = require("express");
-const auth = require("../controllers/authController");
-const isAuthenticated = require("../middleware/auth");
+import express from "express";
+import authController from "../controllers/authController.js";
+import isAuthenticated from "../middleware/auth.js";
+
 const router = express.Router();
 
-//get
-router.route("/logout").get(auth.logout);
-//post
-router.route("/register").post(auth.register);
-router.route("/login").post(auth.login);
-router.route("/requestEmailToken").post(auth.requestEmailToken);
-router.route("/verifyEmail").post(auth.verifyEmail);
-router.route("/forgotPassword").post(auth.forgotPassword);
-//put
-router.route("/resetPassword").put(auth.resetPassword);
-router.route("/updatePassword").put(isAuthenticated, auth.updatePassword);
+// GET
+router.route("/logout").get(authController.logout);
 
-module.exports = router;
+// POST
+router.route("/register").post(authController.register);
+router.route("/login").post(authController.login);
+router.route("/requestEmailToken").post(authController.requestEmailToken);
+router.route("/verifyEmail").post(authController.verifyEmail);
+router.route("/forgotPassword").post(authController.forgotPassword);
+
+// PUT
+router.route("/resetPassword").put(authController.resetPassword);
+router
+  .route("/updatePassword")
+  .put(isAuthenticated, authController.updatePassword);
+
+export default router;

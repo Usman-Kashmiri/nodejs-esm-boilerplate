@@ -1,15 +1,18 @@
-const jwt = require("jsonwebtoken");
-const User = require("../models/User/user");
-const dotenv = require("dotenv");
+import jwt from "jsonwebtoken";
+import User from "../models/User/user.js";
+import dotenv from "dotenv";
+import ErrorHandler from "../utils/ErrorHandler.js";
 
 dotenv.config({ path: ".././src/config/config.env" });
 
-const isAuthenticated = async (req, res, next) => {
+export const isAuthenticated = async (req, res, next) => {
   try {
-    const token = req.headers.authorization;
+    const token = req.header("Authorization")?.replace("Bearer ", "");
+
     if (!token) {
-      return res.status(401).json({ success: false, message: "Not logged in" });
+      return ErrorHandler("Unauthorized Request", 401, req, res);
     }
+
     const decoded = jwt.verify(token, process.env.JWT_SECRET);
     req.user = await User.findById(decoded._id);
     next();
@@ -18,4 +21,39 @@ const isAuthenticated = async (req, res, next) => {
   }
 };
 
-module.exports = isAuthenticated;
+export const adminAuth = async (req, res, next) => {
+  try {
+    if (!req.user) {
+      return res.status(401).json({ success: false, message: "Not logged in" });
+    }
+    if (req.user.role === "admin" || req.user.role === "mod") {
+      next();
+    } else {
+      return res.status(401).json({
+        success: false,
+        message:
+          "You're not an admin. You don't have the permissions to access this route",
+      });
+    }
+  } catch (error) {
+    res.status(500).json({ success: false, message: error.message });
+  }
+};
+
+export const userAuth = async (req, res, next) => {
+  try {
+    if (!req.user) {
+      return res.status(401).json({ success: false, message: "Not logged in" });
+    }
+    if (req.user.role !== "user") {
+      return res.status(401).json({
+        success: false,
+        message:
+          "You're not a user. You don't have the permissions to access this route",
+      });
+    }
+    next();
+  } catch (error) {
+    res.status(500).json({ success: false, message: error.message });
+  }
+};

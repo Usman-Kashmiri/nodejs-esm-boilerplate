@@ -1,4 +1,5 @@
-const swaggerAutogen = require("swagger-autogen")();
+import swaggerAutogen from "swagger-autogen";
+
 const doc = {
   info: {
     title: "Cloudfront",
@@ -16,6 +17,7 @@ const doc = {
 const outputFile = "./swagger_output.json"; // Generated Swagger file
 const endpointsFiles = ["./src/router/index.js"]; // Path to the API routes files
 
-swaggerAutogen(outputFile, endpointsFiles, doc).then(() => {
+const swaggerAutogenInstance = swaggerAutogen();
+swaggerAutogenInstance(outputFile, endpointsFiles, doc).then(() => {
   console.log("Swagger file generated");
 });

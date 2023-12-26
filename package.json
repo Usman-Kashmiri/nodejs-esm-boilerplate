@@ -1,7 +1,8 @@
 {
-  "name": "BE-boilerplate",
+  "name": "nodejs-esm-boilerplate",
   "version": "1.0.0",
   "description": "",
+  "type": "module",
   "main": "./src/index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
@@ -11,29 +12,32 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/ah2k-dev/userAuth-with-email-verification.git"
+    "url": "git+https://github.com/usman-kashmiri/nodejs-esm-boilerplate.git"
   },
-  "author": "ah2k-dev",
+  "author": "usman-kashmiri",
   "license": "ISC",
   "bugs": {
-    "url": "https://github.com/ah2k-dev/userAuth-with-email-verification/issues"
+    "url": "https://github.com/usman-kashmiri/nodejs-esm-boilerplate/issues"
   },
-  "homepage": "https://github.com/ah2k-dev/userAuth-with-email-verification#readme",
+  "homepage": "https://github.com/usman-kashmiri/nodejs-esm-boilerplate#readme",
   "dependencies": {
     "bcryptjs": "^2.4.3",
     "body-parser": "^1.20.0",
     "cors": "^2.8.5",
-    "dotenv": "^16.0.2",
-    "express": "^4.18.1",
-    "jsonwebtoken": "^8.5.1",
-    "mongoose": "^6.5.4",
-    "nodemailer": "^6.7.8",
+    "dotenv": "^16.3.1",
+    "express": "^4.18.2",
+    "jsonwebtoken": "^9.0.2",
+    "moment": "^2.29.4",
+    "mongoose": "^8.0.3",
+    "morgan": "^1.10.0",
+    "multer": "^1.4.5-lts.1",
+    "nodemailer": "^6.9.7",
     "nodemailer-sendgrid-transport": "^0.2.0",
-    "socket.io": "^4.6.1",
-    "swagger-autogen": "^2.23.1",
-    "swagger-ui-express": "^4.6.2",
-    "validator": "^13.7.0",
-    "winston": "^3.8.2"
+    "socket.io": "^4.7.2",
+    "swagger-autogen": "^2.23.7",
+    "swagger-ui-express": "^5.0.0",
+    "validator": "^13.11.0",
+    "winston": "^3.11.0"
   },
   "devDependencies": {
     "nodemon": "^2.0.19"

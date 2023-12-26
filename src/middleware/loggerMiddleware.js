@@ -1,6 +1,6 @@
-const logger = require("../functions/logger");
+import logger from "../functions/logger.js";
 
-module.exports = (req, res, next) => {
+export default (req, res, next) => {
   logger.info({
     method: req.method,
     url: req.url,

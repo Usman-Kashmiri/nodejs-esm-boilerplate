@@ -1,10 +1,10 @@
-const User = require("../models/User/user");
-const sendMail = require("../utils/sendMail");
-const SuccessHandler = require("../utils/SuccessHandler");
-const ErrorHandler = require("../utils/ErrorHandler");
-//register
-const register = async (req, res) => {
-  // #swagger.tags = ['auth']
+import User from "../models/User/user.js";
+import sendMail from "../utils/sendMail.js";
+import SuccessHandler from "../utils/SuccessHandler.js";
+import ErrorHandler from "../utils/ErrorHandler.js";
+
+// Register
+export const register = async (req, res) => {
   try {
     const { name, email, password } = req.body;
     if (
@@ -13,7 +13,7 @@ const register = async (req, res) => {
       )
     ) {
       return ErrorHandler(
-        "Password must contain atleast one uppercase letter, one special character and one number",
+        "Password must contain at least one uppercase letter, one special character, and one number",
         400,
         req,
         res
@@ -29,16 +29,14 @@ const register = async (req, res) => {
       password,
     });
     newUser.save();
-    return SuccessHandler("User created successfully", 200, res);
+    return SuccessHandler("User created successfully", null, 200, res);
   } catch (error) {
     return ErrorHandler(error.message, 500, req, res);
   }
 };
 
-//request email verification token
-const requestEmailToken = async (req, res) => {
-  // #swagger.tags = ['auth']
-
+// Request Email Verification Token
+export const requestEmailToken = async (req, res) => {
   try {
     const { email } = req.body;
     const user = await User.findOne({ email });
@@ -55,6 +53,7 @@ const requestEmailToken = async (req, res) => {
     await sendMail(email, subject, message);
     return SuccessHandler(
       `Email verification token sent to ${email}`,
+      null,
       200,
       res
     );
@@ -63,10 +62,8 @@ const requestEmailToken = async (req, res) => {
   }
 };
 
-//verify email token
-const verifyEmail = async (req, res) => {
-  // #swagger.tags = ['auth']
-
+// Verify Email Token
+export const verifyEmail = async (req, res) => {
   try {
     const { email, emailVerificationToken } = req.body;
     const user = await User.findOne({ email });
@@ -87,16 +84,14 @@ const verifyEmail = async (req, res) => {
     user.emailVerificationTokenExpires = null;
     jwtToken = user.getJWTToken();
     await user.save();
-    return SuccessHandler("Email verified successfully", 200, res);
+    return SuccessHandler("Email verified successfully", null, 200, res);
   } catch (error) {
     return ErrorHandler(error.message, 500, req, res);
   }
 };
 
-//login
-const login = async (req, res) => {
-  // #swagger.tags = ['auth']
-
+// Login
+export const login = async (req, res) => {
   try {
     const { email, password } = req.body;
     const user = await User.findOne({ email }).select("+password");
@@ -111,28 +106,24 @@ const login = async (req, res) => {
       return ErrorHandler("Email not verified", 400, req, res);
     }
     jwtToken = user.getJWTToken();
-    return SuccessHandler("Logged in successfully", 200, res);
+    return SuccessHandler("Logged in successfully", null, 200, res);
   } catch (error) {
     return ErrorHandler(error.message, 500, req, res);
   }
 };
 
-//logout
-const logout = async (req, res) => {
-  // #swagger.tags = ['auth']
-
+// Logout
+export const logout = async (req, res) => {
   try {
     req.user = null;
-    return SuccessHandler("Logged out successfully", 200, res);
+    return SuccessHandler("Logged out successfully", null, 200, res);
   } catch (error) {
     return ErrorHandler(error.message, 500, req, res);
   }
 };
 
-//forgot password
-const forgotPassword = async (req, res) => {
-  // #swagger.tags = ['auth']
-
+// Forgot Password
+export const forgotPassword = async (req, res) => {
   try {
     const { email } = req.body;
     const user = await User.findOne({ email });
@@ -147,16 +138,19 @@ const forgotPassword = async (req, res) => {
     const message = `Your password reset token is ${resetPasswordToken} and it expires in 10 minutes`;
     const subject = `Password reset token`;
     await sendMail(email, subject, message);
-    return SuccessHandler(`Password reset token sent to ${email}`, 200, res);
+    return SuccessHandler(
+      `Password reset token sent to ${email}`,
+      null,
+      200,
+      res
+    );
   } catch (error) {
     return ErrorHandler(error.message, 500, req, res);
   }
 };
 
-//reset password
-const resetPassword = async (req, res) => {
-  // #swagger.tags = ['auth']
-
+// Reset Password
+export const resetPassword = async (req, res) => {
   try {
     const { email, passwordResetToken, password } = req.body;
     const user = await User.findOne({ email }).select("+password");
@@ -173,16 +167,14 @@ const resetPassword = async (req, res) => {
     user.passwordResetToken = null;
     user.passwordResetTokenExpires = null;
     await user.save();
-    return SuccessHandler("Password reset successfully", 200, res);
+    return SuccessHandler("Password reset successfully", null, 200, res);
   } catch (error) {
     return ErrorHandler(error.message, 500, req, res);
   }
 };
 
-//update password
-const updatePassword = async (req, res) => {
-  // #swagger.tags = ['auth']
-
+// Update Password
+export const updatePassword = async (req, res) => {
   try {
     const { currentPassword, newPassword } = req.body;
     if (
@@ -191,7 +183,7 @@ const updatePassword = async (req, res) => {
       )
     ) {
       return ErrorHandler(
-        "Password must contain at least 8 characters, 1 uppercase, 1 lowercase, 1 number and 1 special character",
+        "Password must contain at least 8 characters, 1 uppercase, 1 lowercase, 1 number, and 1 special character",
         400,
         req,
         res
@@ -205,7 +197,7 @@ const updatePassword = async (req, res) => {
     const samePasswords = await user.comparePassword(newPassword);
     if (samePasswords) {
       return ErrorHandler(
-        "New password cannot be same as old password",
+        "New password cannot be the same as the old password",
         400,
         req,
         res
@@ -213,19 +205,8 @@ const updatePassword = async (req, res) => {
     }
     user.password = newPassword;
     await user.save();
-    return SuccessHandler("Password updated successfully", 200, res);
+    return SuccessHandler("Password updated successfully", null, 200, res);
   } catch (error) {
     return ErrorHandler(error.message, 500, req, res);
   }
-};
-
-module.exports = {
-  register,
-  requestEmailToken,
-  verifyEmail,
-  login,
-  logout,
-  forgotPassword,
-  resetPassword,
-  updatePassword,
 };
