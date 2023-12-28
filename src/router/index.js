@@ -1,4 +1,4 @@
-import RouteNotFoundHandler from "../middleware/app.js";
+import routeNotFoundHandler from "../middleware/app.js";
 import auth from "./auth.js";
 import express from "express";
 
@@ -7,6 +7,6 @@ const router = express.Router();
 router.use("/auth", auth);
 
 // ? app
-router.use(RouteNotFoundHandler);
+router.use(routeNotFoundHandler);
 
 export default router;
