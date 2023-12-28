@@ -1,7 +1,7 @@
 import jwt from "jsonwebtoken";
 import User from "../models/User/User.js";
 import dotenv from "dotenv";
-import { ErrorHandler } from "../utils/ErrorHandler.js";
+import { errorHandler } from "../utils/errorHandler.js";
 
 dotenv.config({ path: ".././src/config/config.env" });
 
@@ -13,7 +13,7 @@ export const isAuthenticated = async (req, res, next) => {
     const token = req?.header?.authorization?.replace("Bearer ", "");
 
     if (token === "") {
-      return ErrorHandler("Unauthorized Request", 401, req, res);
+      return errorHandler("Unauthorized Request", 401, req, res);
     }
 
     if (token) {
@@ -21,7 +21,7 @@ export const isAuthenticated = async (req, res, next) => {
       const user = await User.findById(decoded._id);
 
       if (!user)
-        return ErrorHandler(
+        return errorHandler(
           "Invalid token or you're not logged in",
           401,
           req,

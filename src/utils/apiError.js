@@ -1,4 +1,4 @@
-export const ApiError = (
+export const apiError = (
   statusCode,
   message,
   isOperational = true,
@@ -10,7 +10,7 @@ export const ApiError = (
   if (stack) {
     error.stack = stack;
   } else {
-    Error.captureStackTrace(error, ApiError);
+    Error.captureStackTrace(error, apiError);
   }
   return error;
 };

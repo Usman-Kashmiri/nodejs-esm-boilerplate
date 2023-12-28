@@ -1,4 +1,4 @@
-export const SuccessHandler = (message, data = null, statusCode, res) => {
+export const successHandler = (message, data = null, statusCode, res) => {
   return res.status(statusCode).json({
     success: true,
     message,

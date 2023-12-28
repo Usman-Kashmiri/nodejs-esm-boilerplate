@@ -1,7 +1,7 @@
 import express from "express";
 import cors from "cors";
 import bodyParser from "body-parser";
-import { ApiError } from "./utils/ApiError.js";
+import { ApiError } from "./utils/apiError.js";
 import router from "./router/index.js";
 import loggerMiddleware from "./middleware/loggerMiddleware.js";
 import swaggerUi from "swagger-ui-express";
