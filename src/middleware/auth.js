@@ -10,14 +10,27 @@ dotenv.config({ path: ".././src/config/config.env" });
 // ? check if user has jwt
 export const isAuthenticated = async (req, res, next) => {
   try {
-    const token = req.header("Authorization")?.replace("Bearer ", "");
+    const token = req?.header?.authorization?.replace("Bearer ", "");
 
-    if (!token) {
+    if (token === "") {
       return ErrorHandler("Unauthorized Request", 401, req, res);
     }
 
-    const decoded = jwt.verify(token, process.env.JWT_SECRET);
-    req.user = await User.findById(decoded._id);
+    if (token) {
+      const decoded = jwt.verify(token, process.env.JWT_SECRET);
+      const user = await User.findById(decoded._id);
+
+      if (!user)
+        return ErrorHandler(
+          "Invalid token or you're not logged in",
+          401,
+          req,
+          res
+        );
+
+      req.user = user;
+    }
+
     next();
   } catch (error) {
     res.status(500).json({ success: false, message: error.message });

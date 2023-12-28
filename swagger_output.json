@@ -19,6 +19,9 @@
   "paths": {
     "/auth/logout": {
       "get": {
+        "tags": [
+          "auth"
+        ],
         "description": "",
         "responses": {
           "default": {
@@ -29,6 +32,9 @@
     },
     "/auth/register": {
       "post": {
+        "tags": [
+          "auth"
+        ],
         "description": "",
         "parameters": [
           {
@@ -59,6 +65,9 @@
     },
     "/auth/login": {
       "post": {
+        "tags": [
+          "auth"
+        ],
         "description": "",
         "parameters": [
           {
@@ -86,6 +95,9 @@
     },
     "/auth/requestEmailToken": {
       "post": {
+        "tags": [
+          "auth"
+        ],
         "description": "",
         "parameters": [
           {
@@ -110,6 +122,9 @@
     },
     "/auth/verifyEmail": {
       "post": {
+        "tags": [
+          "auth"
+        ],
         "description": "",
         "parameters": [
           {
@@ -137,6 +152,9 @@
     },
     "/auth/forgotPassword": {
       "post": {
+        "tags": [
+          "auth"
+        ],
         "description": "",
         "parameters": [
           {
@@ -161,6 +179,9 @@
     },
     "/auth/resetPassword": {
       "put": {
+        "tags": [
+          "auth"
+        ],
         "description": "",
         "parameters": [
           {
@@ -191,13 +212,11 @@
     },
     "/auth/updatePassword": {
       "put": {
+        "tags": [
+          "auth"
+        ],
         "description": "",
         "parameters": [
-          {
-            "name": "Authorization",
-            "in": "header",
-            "type": "string"
-          },
           {
             "name": "body",
             "in": "body",
