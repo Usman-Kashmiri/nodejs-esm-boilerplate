@@ -1,10 +1,11 @@
-import User from "../models/User/user.js";
+import User from "../models/User/User.js";
 import sendMail from "../utils/sendMail.js";
-import SuccessHandler from "../utils/SuccessHandler.js";
-import ErrorHandler from "../utils/ErrorHandler.js";
+import { SuccessHandler } from "../utils/SuccessHandler.js";
+import { ErrorHandler } from "../utils/ErrorHandler.js";
 
-// Register
+// ? Register
 export const register = async (req, res) => {
+  // #swagger.tags = ['auth']
   try {
     const { name, email, password } = req.body;
     if (
@@ -35,8 +36,9 @@ export const register = async (req, res) => {
   }
 };
 
-// Request Email Verification Token
+// ? Request Email Verification Token
 export const requestEmailToken = async (req, res) => {
+  // #swagger.tags = ['auth']
   try {
     const { email } = req.body;
     const user = await User.findOne({ email });
@@ -62,8 +64,9 @@ export const requestEmailToken = async (req, res) => {
   }
 };
 
-// Verify Email Token
+// ? Verify Email Token
 export const verifyEmail = async (req, res) => {
+  // #swagger.tags = ['auth']
   try {
     const { email, emailVerificationToken } = req.body;
     const user = await User.findOne({ email });
@@ -82,7 +85,7 @@ export const verifyEmail = async (req, res) => {
     user.emailVerified = true;
     user.emailVerificationToken = null;
     user.emailVerificationTokenExpires = null;
-    jwtToken = user.getJWTToken();
+    jwt = user.getJWT();
     await user.save();
     return SuccessHandler("Email verified successfully", null, 200, res);
   } catch (error) {
@@ -90,8 +93,9 @@ export const verifyEmail = async (req, res) => {
   }
 };
 
-// Login
+// ? Login
 export const login = async (req, res) => {
+  // #swagger.tags = ['auth']
   try {
     const { email, password } = req.body;
     const user = await User.findOne({ email }).select("+password");
@@ -105,15 +109,23 @@ export const login = async (req, res) => {
     if (!user.emailVerified) {
       return ErrorHandler("Email not verified", 400, req, res);
     }
-    jwtToken = user.getJWTToken();
-    return SuccessHandler("Logged in successfully", null, 200, res);
+
+    const jwt = user.getJWT();
+
+    return SuccessHandler(
+      "Logged in successfully",
+      { jwt, data: user },
+      200,
+      res
+    );
   } catch (error) {
     return ErrorHandler(error.message, 500, req, res);
   }
 };
 
-// Logout
+// ? Logout
 export const logout = async (req, res) => {
+  // #swagger.tags = ['auth']
   try {
     req.user = null;
     return SuccessHandler("Logged out successfully", null, 200, res);
@@ -122,8 +134,9 @@ export const logout = async (req, res) => {
   }
 };
 
-// Forgot Password
+// ? Forgot Password
 export const forgotPassword = async (req, res) => {
+  // #swagger.tags = ['auth']
   try {
     const { email } = req.body;
     const user = await User.findOne({ email });
@@ -149,8 +162,9 @@ export const forgotPassword = async (req, res) => {
   }
 };
 
-// Reset Password
+// ? Reset Password
 export const resetPassword = async (req, res) => {
+  // #swagger.tags = ['auth']
   try {
     const { email, passwordResetToken, password } = req.body;
     const user = await User.findOne({ email }).select("+password");
@@ -173,8 +187,9 @@ export const resetPassword = async (req, res) => {
   }
 };
 
-// Update Password
+// ? Update Password
 export const updatePassword = async (req, res) => {
+  // #swagger.tags = ['auth']
   try {
     const { currentPassword, newPassword } = req.body;
     if (

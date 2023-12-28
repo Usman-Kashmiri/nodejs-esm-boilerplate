@@ -1,3 +1,6 @@
+// * Socket functions
+
+// ? add user to online users array
 export const addUser = async (user, socket) => {
   const index = global.onlineUsers.findIndex((exUser) => {
     return exUser.user._id == user._id;
@@ -14,6 +17,7 @@ export const addUser = async (user, socket) => {
   console.log(global.onlineUsers);
 };
 
+// ? remove user from online users array
 export const removeUser = async (socket) => {
   const removedUser = global.onlineUsers.find((exUser) => {
     return exUser.socket == socket;

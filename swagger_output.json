@@ -19,19 +19,16 @@
   "paths": {
     "/auth/logout": {
       "get": {
-        "tags": [
-          "auth"
-        ],
         "description": "",
-        "parameters": [],
-        "responses": {}
+        "responses": {
+          "default": {
+            "description": ""
+          }
+        }
       }
     },
     "/auth/register": {
       "post": {
-        "tags": [
-          "auth"
-        ],
         "description": "",
         "parameters": [
           {
@@ -53,14 +50,15 @@
             }
           }
         ],
-        "responses": {}
+        "responses": {
+          "default": {
+            "description": ""
+          }
+        }
       }
     },
     "/auth/login": {
       "post": {
-        "tags": [
-          "auth"
-        ],
         "description": "",
         "parameters": [
           {
@@ -79,14 +77,15 @@
             }
           }
         ],
-        "responses": {}
+        "responses": {
+          "default": {
+            "description": ""
+          }
+        }
       }
     },
     "/auth/requestEmailToken": {
       "post": {
-        "tags": [
-          "auth"
-        ],
         "description": "",
         "parameters": [
           {
@@ -102,14 +101,15 @@
             }
           }
         ],
-        "responses": {}
+        "responses": {
+          "default": {
+            "description": ""
+          }
+        }
       }
     },
     "/auth/verifyEmail": {
       "post": {
-        "tags": [
-          "auth"
-        ],
         "description": "",
         "parameters": [
           {
@@ -137,9 +137,6 @@
     },
     "/auth/forgotPassword": {
       "post": {
-        "tags": [
-          "auth"
-        ],
         "description": "",
         "parameters": [
           {
@@ -155,14 +152,15 @@
             }
           }
         ],
-        "responses": {}
+        "responses": {
+          "default": {
+            "description": ""
+          }
+        }
       }
     },
     "/auth/resetPassword": {
       "put": {
-        "tags": [
-          "auth"
-        ],
         "description": "",
         "parameters": [
           {
@@ -184,18 +182,19 @@
             }
           }
         ],
-        "responses": {}
+        "responses": {
+          "default": {
+            "description": ""
+          }
+        }
       }
     },
     "/auth/updatePassword": {
       "put": {
-        "tags": [
-          "auth"
-        ],
         "description": "",
         "parameters": [
           {
-            "name": "authorization",
+            "name": "Authorization",
             "in": "header",
             "type": "string"
           },
@@ -216,9 +215,6 @@
           }
         ],
         "responses": {
-          "401": {
-            "description": "Unauthorized"
-          },
           "500": {
             "description": "Internal Server Error"
           }

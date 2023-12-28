@@ -1,6 +1,7 @@
-import ErrorHandler from "../utils/ErrorHandler";
+import { ErrorHandler } from "../utils/ErrorHandler.js";
 
-export const routeNotFoundHandler = (req, res, next) => {
+// ? route not handler
+const RouteNotFoundHandler = (req, res, next) => {
   return ErrorHandler(
     `The Requested Route ${req.hostname + req.originalUrl} Not Found`,
     404,
@@ -8,3 +9,5 @@ export const routeNotFoundHandler = (req, res, next) => {
     res
   );
 };
+
+export default RouteNotFoundHandler;

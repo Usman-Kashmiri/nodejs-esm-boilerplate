@@ -5,13 +5,17 @@ import connectDB from "./config/db.js";
 import app from "./app.js";
 import { addUser, removeUser } from "./functions/sockets/index.js";
 
-dotenv.config({ path: "./src/config/config.env" }); //load env vars
+// ! make your own config.env
+// ! define .env path
+// ? take a look at .env.example for refernce
+// ? load env vars
+dotenv.config({ path: "./src/config/config.env" });
 
-//global vars
+// ? global vars
 global.io;
 global.onlineUsers = [];
 
-//server setup
+// ? server setup
 const PORT = process.env.PORT || 8001;
 
 var server = http.createServer(app);
@@ -20,8 +24,8 @@ server.listen(PORT, () => {
   connectDB();
 });
 
-//socket.io
-global.io = socket(server, {
+// ? socket.io
+global.io = new socket(server, {
   cors: {
     origin: "*",
   },

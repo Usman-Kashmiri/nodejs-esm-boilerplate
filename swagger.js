@@ -14,8 +14,8 @@ const doc = {
   tags: [],
 };
 
-const outputFile = "./swagger_output.json"; // Generated Swagger file
-const endpointsFiles = ["./src/router/index.js"]; // Path to the API routes files
+const outputFile = "./swagger_output.json"; // ? Generated Swagger file
+const endpointsFiles = ["./src/router/index.js"]; // ? Path to the API routes files
 
 const swaggerAutogenInstance = swaggerAutogen();
 swaggerAutogenInstance(outputFile, endpointsFiles, doc).then(() => {

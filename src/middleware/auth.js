@@ -1,10 +1,13 @@
 import jwt from "jsonwebtoken";
-import User from "../models/User/user.js";
+import User from "../models/User/User.js";
 import dotenv from "dotenv";
-import ErrorHandler from "../utils/ErrorHandler.js";
+import { ErrorHandler } from "../utils/ErrorHandler.js";
 
 dotenv.config({ path: ".././src/config/config.env" });
 
+// * authentication middlewares
+
+// ? check if user has jwt
 export const isAuthenticated = async (req, res, next) => {
   try {
     const token = req.header("Authorization")?.replace("Bearer ", "");
@@ -21,6 +24,7 @@ export const isAuthenticated = async (req, res, next) => {
   }
 };
 
+// ? check if the role is admin
 export const adminAuth = async (req, res, next) => {
   try {
     if (!req.user) {
@@ -40,6 +44,7 @@ export const adminAuth = async (req, res, next) => {
   }
 };
 
+// ? check if the role is user
 export const userAuth = async (req, res, next) => {
   try {
     if (!req.user) {

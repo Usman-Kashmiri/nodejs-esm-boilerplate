@@ -1,5 +1,6 @@
 import winston from "winston";
 
+// ? logger for creating error logs
 const logger = winston.createLogger({
   level: "info",
   format: winston.format.json(),

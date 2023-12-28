@@ -1,5 +1,6 @@
 import logger from "../functions/logger.js";
 
+// ? logger info middleware
 export default (req, res, next) => {
   logger.info({
     method: req.method,

@@ -64,7 +64,7 @@ const userSchema = new Schema(
   { timestamps: true }
 );
 
-// Hash password before saving
+// ? Hash password before saving
 userSchema.pre("save", async function (next) {
   if (!this.isModified("password")) return next;
   const salt = await bcrypt.genSalt(10);
@@ -72,16 +72,16 @@ userSchema.pre("save", async function (next) {
   next();
 });
 
-// JWT Token
-userSchema.methods.getJWTToken = function () {
+// ? JWT
+userSchema.methods.getJWT = function () {
   return jwt.sign({ _id: this._id }, process.env.JWT_SECRET);
 };
 
-// Compare password
+// ? Compare password
 userSchema.methods.comparePassword = async function (enteredPassword) {
   return await bcrypt.compare(enteredPassword, this.password);
 };
 
-const User = mongoose.model("user", userSchema);
+const User = mongoose.model("User", userSchema);
 
 export default User;

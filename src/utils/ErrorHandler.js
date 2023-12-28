@@ -1,6 +1,6 @@
 import logger from "../functions/logger.js";
 
-const ErrorHandler = (message, statusCode, req, res) => {
+export const ErrorHandler = (message, statusCode, req, res) => {
   logger.error({
     method: req.method,
     url: req.url,
@@ -12,5 +12,3 @@ const ErrorHandler = (message, statusCode, req, res) => {
     message: message,
   });
 };
-
-export default ErrorHandler;
