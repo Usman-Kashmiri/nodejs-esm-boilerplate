@@ -1,7 +1,7 @@
 import express from "express";
 import cors from "cors";
 import bodyParser from "body-parser";
-import { ApiError } from "./utils/apiError.js";
+import { apiError } from "./utils/apiError.js";
 import router from "./router/index.js";
 import loggerMiddleware from "./middleware/loggerMiddleware.js";
 import swaggerUi from "swagger-ui-express";
@@ -31,7 +31,7 @@ app.get("/", (req, res) => {
 
 // ? send back a 404 error for any unknown api request
 app.use((req, res, next) => {
-  next(ApiError(404, "Not found"));
+  next(apiError(404, "Not found"));
 });
 
 export default app;
