@@ -74,7 +74,9 @@ userSchema.pre("save", async function (next) {
 
 // ? JWT
 userSchema.methods.getJWT = function () {
-  return jwt.sign({ _id: this._id }, process.env.JWT_SECRET);
+  return jwt.sign({ _id: this._id }, process.env.JWT_SECRET, {
+    expiresIn: 86400, // ? set jwt expery time. currently it's set to expiry after 24 hrs.
+  });
 };
 
 // ? Compare password

@@ -10,7 +10,7 @@ dotenv.config({ path: ".././src/config/config.env" });
 // ? check if user has jwt
 export const isAuthenticated = async (req, res, next) => {
   try {
-    const token = req?.header?.authorization?.replace("Bearer ", "");
+    const token = req?.headers?.authorization?.replace("Bearer ", "");
 
     if (token === "") {
       return errorHandler("Unauthorized Request", 401, req, res);
